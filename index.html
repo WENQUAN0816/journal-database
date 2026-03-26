@@ -3,27 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>期刊数据库 2025 — EI + JCR + 中科院</title>
+<title>新锐XR2026 期刊数据库</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #222; }
-
   header { background: linear-gradient(135deg, #1a3a5c 0%, #2563eb 100%); color: #fff; padding: 28px 32px 20px; }
   header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: .5px; }
-  header p  { font-size: .85rem; opacity: .8; margin-top: 4px; }
-
+  header p { font-size: .85rem; opacity: .8; margin-top: 4px; }
   .toolbar { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
   .search-wrap { position: relative; flex: 1; min-width: 220px; }
   .search-wrap input { width: 100%; padding: 9px 14px 9px 38px; border: 1.5px solid #d0d7de; border-radius: 8px; font-size: .95rem; outline: none; transition: border .2s; }
   .search-wrap input:focus { border-color: #2563eb; }
   .search-wrap .icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1rem; }
-
   select { padding: 9px 12px; border: 1.5px solid #d0d7de; border-radius: 8px; font-size: .88rem; background: #fff; cursor: pointer; outline: none; }
   select:focus { border-color: #2563eb; }
-
   .stats { margin-left: auto; font-size: .82rem; color: #666; white-space: nowrap; }
   .stats b { color: #2563eb; }
-
   .table-wrap { overflow-x: auto; padding: 0 32px 32px; margin-top: 16px; }
   table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.08); font-size: .85rem; }
   thead tr { background: #1a3a5c; color: #fff; }
@@ -31,215 +26,140 @@
   thead th:hover { background: #2563eb; }
   thead th .sort-arrow { opacity: .5; margin-left: 4px; }
   thead th.sorted .sort-arrow { opacity: 1; }
-
-  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background .12s; }
-  tbody tr:hover { background: #f0f6ff; }
-  tbody tr:last-child { border-bottom: none; }
-  td { padding: 9px 12px; vertical-align: middle; }
-
-  .journal-name { font-weight: 600; color: #1a3a5c; max-width: 320px; }
-  .tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: .75rem; font-weight: 600; margin: 1px; }
-  .tag-q1 { background: #dcfce7; color: #166534; }
-  .tag-q2 { background: #dbeafe; color: #1e40af; }
-  .tag-q3 { background: #fef9c3; color: #854d0e; }
-  .tag-q4 { background: #fee2e2; color: #991b1b; }
-  .tag-cas1 { background: #dcfce7; color: #166534; }
-  .tag-cas2 { background: #dbeafe; color: #1e40af; }
-  .tag-cas3 { background: #fef9c3; color: #854d0e; }
-  .tag-cas4 { background: #fee2e2; color: #991b1b; }
-  .tag-ei  { background: #f3e8ff; color: #6b21a8; }
-  .tag-top { background: #fce7f3; color: #9d174d; }
-  .tag-oa  { background: #ecfdf5; color: #065f46; }
-  .jif { font-weight: 700; color: #2563eb; }
-  .category { color: #555; font-size: .78rem; max-width: 260px; line-height: 1.4; }
-
-  .no-data { text-align: center; padding: 60px; color: #aaa; font-size: 1rem; }
-
-  .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 16px 32px; flex-wrap: wrap; }
-  .pagination button { padding: 6px 13px; border: 1.5px solid #d0d7de; border-radius: 6px; background: #fff; cursor: pointer; font-size: .85rem; transition: all .15s; }
+  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background .15s; }
+  tbody tr:hover { background: #f5f8ff; }
+  tbody td { padding: 9px 12px; vertical-align: middle; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .78rem; font-weight: 600; }
+  .tier-1 { background: #fef3c7; color: #92400e; }
+  .tier-2 { background: #dbeafe; color: #1e40af; }
+  .tier-3 { background: #dcfce7; color: #166534; }
+  .tier-4 { background: #f3f4f6; color: #374151; }
+  .top-yes { background: #fce7f3; color: #9d174d; }
+  .pagination { display: flex; gap: 6px; justify-content: center; align-items: center; padding: 16px 0 8px; flex-wrap: wrap; }
+  .pagination button { padding: 5px 11px; border: 1.5px solid #d0d7de; border-radius: 6px; background: #fff; cursor: pointer; font-size: .85rem; }
   .pagination button:hover { border-color: #2563eb; color: #2563eb; }
   .pagination button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
   .pagination button:disabled { opacity: .4; cursor: default; }
-  .page-info { font-size: .82rem; color: #666; }
-
-  @media (max-width: 700px) {
-    header, .toolbar, .table-wrap, .pagination { padding-left: 12px; padding-right: 12px; }
-    .stats { display: none; }
-  }
+  .page-info { font-size: .82rem; color: #666; margin-left: 8px; }
+  @media(max-width:600px) { .toolbar { padding: 10px 12px; } .table-wrap { padding: 0 8px 24px; } }
 </style>
 </head>
 <body>
-
 <header>
-  <h1>📚 期刊数据库 2025</h1>
-  <p>EI核心期刊 · 2025 JCR分区（2024 JIF）· 2025中科院分区 &nbsp;|&nbsp; 共 <span id="total-count">-</span> 种期刊</p>
+  <h1>新锐XR2026 期刊分区数据库</h1>
+  <p>新锐科学XR2026分区 · 共 15,220 本期刊（已移除ESCI）</p>
 </header>
-
 <div class="toolbar">
   <div class="search-wrap">
     <span class="icon">🔍</span>
-    <input type="text" id="search" placeholder="搜索期刊名称、ISSN、学科..." autocomplete="off">
+    <input type="text" id="search" placeholder="搜索期刊名、ISSN、学科分类…">
   </div>
-  <select id="filter-jcr">
-    <option value="">JCR分区（全部）</option>
-    <option value="Q1">Q1</option>
-    <option value="Q2">Q2</option>
-    <option value="Q3">Q3</option>
-    <option value="Q4">Q4</option>
-  </select>
-  <select id="filter-cas">
-    <option value="">中科院分区（全部）</option>
+  <select id="filter-tier">
+    <option value="">全部分区</option>
     <option value="1">1区</option>
     <option value="2">2区</option>
     <option value="3">3区</option>
     <option value="4">4区</option>
   </select>
-  <select id="filter-source">
-    <option value="">数据来源（全部）</option>
-    <option value="JCR+CAS+EI">三库全收录</option>
-    <option value="EI">含EI</option>
-    <option value="JCR">含JCR</option>
-    <option value="CAS">含中科院</option>
+  <select id="filter-category">
+    <option value="">全部学科</option>
   </select>
   <select id="filter-top">
     <option value="">Top期刊</option>
-    <option value="yes">仅Top期刊</option>
+    <option value="Yes">仅Top</option>
+    <option value="No">非Top</option>
   </select>
-  <div class="stats">显示 <b id="shown-count">-</b> / <b id="total-count2">-</b> 条</div>
+  <div class="stats">显示 <b id="count">0</b> / <b>15220</b> 条</div>
 </div>
-
 <div class="table-wrap">
-  <table id="main-table">
+  <table>
     <thead>
       <tr>
-        <th data-col="期刊名称">期刊名称 <span class="sort-arrow">↕</span></th>
+        <th data-col="Journal Name">期刊名称 <span class="sort-arrow">↕</span></th>
+        <th data-col="Category">学科分类 <span class="sort-arrow">↕</span></th>
         <th data-col="ISSN">ISSN</th>
-        <th data-col="JCR_2024JIF">2024 JIF <span class="sort-arrow">↕</span></th>
-        <th data-col="JCR_Quartile">JCR分区 <span class="sort-arrow">↕</span></th>
-        <th data-col="CAS_分区">中科院分区 <span class="sort-arrow">↕</span></th>
-        <th data-col="EI">EI收录</th>
-        <th data-col="CAS_Top">Top</th>
-        <th data-col="CAS_OpenAccess">OA</th>
-        <th data-col="JCR_Category">JCR学科类别</th>
-        <th data-col="数据来源">来源</th>
+        <th data-col="EISSN">EISSN</th>
+        <th data-col="Tier (Zone)">分区 <span class="sort-arrow">↕</span></th>
+        <th data-col="Is Top">Top <span class="sort-arrow">↕</span></th>
       </tr>
     </thead>
-    <tbody id="table-body">
-      <tr><td colspan="10" class="no-data">加载中...</td></tr>
-    </tbody>
+    <tbody id="tbody"></tbody>
   </table>
 </div>
-
 <div class="pagination" id="pagination"></div>
-
 <script>
-let allData = [];
-let filtered = [];
-let sortCol = '';
-let sortDir = 1;
-let page = 1;
 const PAGE_SIZE = 50;
+let allData = [], filtered = [], page = 1, sortCol = 'Tier (Zone)', sortDir = 1;
 
 async function loadCSV() {
-  const res = await fetch('journals_db.csv');
+  const res = await fetch('xr2026.csv');
   const text = await res.text();
-  const lines = text.split('\n');
-  const headers = parseCSVLine(lines[0]);
-  allData = [];
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    const vals = parseCSVLine(lines[i]);
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^\uFEFF/, '').replace(/^"|"$/g, ''));
+  allData = lines.slice(1).map(line => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') { inQ = !inQ; }
+      else if (line[i] === ',' && !inQ) { cols.push(cur); cur = ''; }
+      else cur += line[i];
+    }
+    cols.push(cur);
     const obj = {};
-    headers.forEach((h, idx) => obj[h] = (vals[idx] || '').trim());
-    allData.push(obj);
-  }
-  document.getElementById('total-count').textContent = allData.length.toLocaleString();
-  document.getElementById('total-count2').textContent = allData.length.toLocaleString();
+    headers.forEach((h, i) => obj[h] = (cols[i] || '').trim());
+    return obj;
+  });
+  // Populate category filter
+  const cats = [...new Set(allData.map(r => r['Category']))].filter(Boolean).sort();
+  const sel = document.getElementById('filter-category');
+  cats.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); });
   applyFilters();
 }
 
-function parseCSVLine(line) {
-  const result = [];
-  let cur = '', inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const c = line[i];
-    if (c === '"') { inQ = !inQ; }
-    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
-    else { cur += c; }
-  }
-  result.push(cur);
-  return result;
-}
+function tierNum(t) { const m = t.match(/(\d+)/); return m ? parseInt(m[1]) : 9; }
 
 function applyFilters() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const jcr = document.getElementById('filter-jcr').value;
-  const cas = document.getElementById('filter-cas').value;
-  const src = document.getElementById('filter-source').value;
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const tier = document.getElementById('filter-tier').value;
+  const cat = document.getElementById('filter-category').value;
   const top = document.getElementById('filter-top').value;
-
   filtered = allData.filter(r => {
-    if (q) {
-      const hay = (r['期刊名称'] + r['ISSN'] + r['EISSN'] + r['JCR_Category'] + r['EI_学科'] + r['出版商']).toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    if (jcr && r['JCR_Quartile'] !== jcr) return false;
-    if (cas && String(r['CAS_分区']) !== cas) return false;
-    if (src) {
-      if (src === 'JCR+CAS+EI' && r['数据来源'] !== 'JCR+CAS+EI') return false;
-      if (src === 'EI' && !r['数据来源'].includes('EI')) return false;
-      if (src === 'JCR' && !r['数据来源'].includes('JCR')) return false;
-      if (src === 'CAS' && !r['数据来源'].includes('CAS')) return false;
-    }
-    if (top === 'yes' && r['CAS_Top'] !== '是') return false;
+    if (q && !r['Journal Name'].toLowerCase().includes(q) && !r['ISSN'].toLowerCase().includes(q) && !r['EISSN'].toLowerCase().includes(q) && !r['Category'].toLowerCase().includes(q)) return false;
+    if (tier && tierNum(r['Tier (Zone)']) !== parseInt(tier)) return false;
+    if (cat && r['Category'] !== cat) return false;
+    if (top && r['Is Top'] !== top) return false;
     return true;
   });
-
-  if (sortCol) {
-    filtered.sort((a, b) => {
-      let av = a[sortCol] || '', bv = b[sortCol] || '';
-      const an = parseFloat(av), bn = parseFloat(bv);
-      if (!isNaN(an) && !isNaN(bn)) return (an - bn) * sortDir;
-      return av.localeCompare(bv) * sortDir;
-    });
-  }
-
+  filtered.sort((a, b) => {
+    let av = a[sortCol] || '', bv = b[sortCol] || '';
+    if (sortCol === 'Tier (Zone)') { av = tierNum(av); bv = tierNum(bv); return (av - bv) * sortDir; }
+    return av.localeCompare(bv) * sortDir;
+  });
   page = 1;
-  document.getElementById('shown-count').textContent = filtered.length.toLocaleString();
+  document.getElementById('count').textContent = filtered.length.toLocaleString();
   renderTable();
   renderPagination();
 }
 
+function tierClass(t) {
+  const n = tierNum(t);
+  return ['','tier-1','tier-2','tier-3','tier-4'][n] || 'tier-4';
+}
+
 function renderTable() {
-  const tbody = document.getElementById('table-body');
   const start = (page - 1) * PAGE_SIZE;
   const rows = filtered.slice(start, start + PAGE_SIZE);
-
-  if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="10" class="no-data">未找到匹配的期刊</td></tr>';
-    return;
-  }
-
+  const tbody = document.getElementById('tbody');
   tbody.innerHTML = rows.map(r => {
-    const jif = r['JCR_2024JIF'] ? `<span class="jif">${r['JCR_2024JIF']}</span>` : '';
-    const jq = r['JCR_Quartile'] ? `<span class="tag tag-${r['JCR_Quartile'].toLowerCase()}">${r['JCR_Quartile']}</span>` : '';
-    const cq = r['CAS_分区'] ? `<span class="tag tag-cas${r['CAS_分区']}">${r['CAS_分区']}区</span>` : '';
-    const ei = r['数据来源'] && r['数据来源'].includes('EI') ? '<span class="tag tag-ei">EI</span>' : '';
-    const top = r['CAS_Top'] === '是' ? '<span class="tag tag-top">Top</span>' : '';
-    const oa = r['CAS_OpenAccess'] === '是' ? '<span class="tag tag-oa">OA</span>' : '';
-    const cat = r['JCR_Category'] ? `<div class="category">${r['JCR_Category'].replace(/;/g, '<br>')}</div>` : '';
-    const src = r['数据来源'] || '';
+    const tier = r['Tier (Zone)'];
+    const isTop = r['Is Top'] === 'Yes';
     return `<tr>
-      <td class="journal-name">${r['期刊名称']}</td>
-      <td>${r['ISSN'] || ''}</td>
-      <td>${jif}</td>
-      <td>${jq}</td>
-      <td>${cq}</td>
-      <td>${ei}</td>
-      <td>${top}</td>
-      <td>${oa}</td>
-      <td>${cat}</td>
-      <td><small>${src}</small></td>
+      <td><b>${r['Journal Name']}</b></td>
+      <td>${r['Category']}</td>
+      <td>${r['ISSN']}</td>
+      <td>${r['EISSN']}</td>
+      <td><span class="badge ${tierClass(tier)}">${tier}</span></td>
+      <td>${isTop ? '<span class="badge top-yes">Top</span>' : ''}</td>
     </tr>`;
   }).join('');
 }
@@ -248,14 +168,13 @@ function renderPagination() {
   const total = Math.ceil(filtered.length / PAGE_SIZE);
   const pg = document.getElementById('pagination');
   if (total <= 1) { pg.innerHTML = ''; return; }
-
   let html = `<button onclick="goPage(${page-1})" ${page===1?'disabled':''}>‹ 上一页</button>`;
-  const range = [];
-  for (let i = 1; i <= total; i++) {
-    if (i === 1 || i === total || (i >= page-2 && i <= page+2)) range.push(i);
-    else if (range[range.length-1] !== '...') range.push('...');
+  let pages = [];
+  for (let p = 1; p <= total; p++) {
+    if (p === 1 || p === total || (p >= page-2 && p <= page+2)) pages.push(p);
+    else if (pages[pages.length-1] !== '...') pages.push('...');
   }
-  range.forEach(p => {
+  pages.forEach(p => {
     if (p === '...') html += `<span style="padding:0 4px">…</span>`;
     else html += `<button class="${p===page?'active':''}" onclick="goPage(${p})">${p}</button>`;
   });
@@ -273,7 +192,6 @@ function goPage(p) {
   window.scrollTo(0, 0);
 }
 
-// Sort
 document.querySelectorAll('thead th[data-col]').forEach(th => {
   th.addEventListener('click', () => {
     const col = th.dataset.col;
@@ -287,8 +205,7 @@ document.querySelectorAll('thead th[data-col]').forEach(th => {
   });
 });
 
-// Filters
-['search','filter-jcr','filter-cas','filter-source','filter-top'].forEach(id => {
+['search','filter-tier','filter-category','filter-top'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener(id === 'search' ? 'input' : 'change', applyFilters);
 });
